@@ -11,12 +11,23 @@ const aSlider = document.getElementById("aSlider");
 const aValue = document.getElementById("aValue");
 
 const heroText = document.querySelector(".hero-style");
+const copyBtn = document.querySelector(".copy-btn");
+
+copyBtn.addEventListener("click", () => {
+    const textToCopy = heroText.textContent;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        alert(`Copied to clipboard: ${textToCopy}`);
+    }).catch(err => {
+        console.error('Failed to copy text: ', err);
+    });
+});
 
 // slider -> number
 rSlider.addEventListener("input",()=>{
     rValue.value = rSlider.value;
     updateRGBA();
 });
+
 gSlider.addEventListener("input",()=>{
     gValue.value = gSlider.value;
     updateRGBA();
