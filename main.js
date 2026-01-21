@@ -13,6 +13,10 @@ const aValue = document.getElementById("aValue");
 const heroText = document.querySelector(".hero-style");
 const copyBtn = document.querySelector(".copy-btn");
 
+const leftChildOne = document.querySelector(".left-child-1");
+
+
+
 copyBtn.addEventListener("click", () => {
     const textToCopy = heroText.textContent;
     navigator.clipboard.writeText(textToCopy).then(() => {
@@ -26,37 +30,45 @@ copyBtn.addEventListener("click", () => {
 rSlider.addEventListener("input",()=>{
     rValue.value = rSlider.value;
     updateRGBA();
+    displayColor();
 });
 
 gSlider.addEventListener("input",()=>{
     gValue.value = gSlider.value;
     updateRGBA();
+    displayColor();
 });
 bSlider.addEventListener("input",()=>{
     bValue.value = bSlider.value;
     updateRGBA();
+    displayColor();
 });
 aSlider.addEventListener("input",()=>{
     aValue.value = aSlider.value;
     updateRGBA();
+    displayColor();
 });
 
 // number -> slider
 rValue.addEventListener("input",()=>{
     rSlider.value = rValue.value;
     updateRGBA();
+    displayColor();
 });
 gValue.addEventListener("input",()=>{
     gSlider.value = gValue.value;
     updateRGBA();
+    displayColor();
 });
 bValue.addEventListener("input",()=>{
     bSlider.value = bValue.value;
     updateRGBA();
+    displayColor();
 });
 aValue.addEventListener("input",()=>{
     aSlider.value = aValue.value;
     updateRGBA();
+    displayColor();
 });
 
 function updateRGBA() {
@@ -68,4 +80,9 @@ function updateRGBA() {
   heroText.textContent = `rgba(${r}, ${g}, ${b}, ${a})`;
 }
 
+function displayColor(){
+    leftChildOne.style.backgroundColor = heroText.textContent;
+}
+
 updateRGBA();
+displayColor();
