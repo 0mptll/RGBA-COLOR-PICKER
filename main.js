@@ -85,6 +85,7 @@ function updateRGBA() {
 
 function displayColor(){
     leftChildOne.style.backgroundColor = heroText.textContent;
+    syncHueAndOpacityFromRGBA();
 }
 
 function updateOpacityBackground() {
@@ -97,6 +98,54 @@ function updateOpacityBackground() {
   opacitySlider.style.background =
     `linear-gradient(to right, transparent, ${hueColor})`;
 }
+
+function rgbToHsl(r, g, b) {
+  r /= 255;
+  g /= 255;
+  b /= 255;
+
+  const max = Math.max(r, g, b);
+  const min = Math.min(r, g, b);
+  let h, s, l = (max + min) / 2;
+
+  if (max === min) {
+    h = s = 0;
+  } else {
+    const d = max - min;
+    s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
+    switch (max) {
+      case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+      case g: h = (b - r) / d + 2; break;
+      case b: h = (r - g) / d + 4; break;
+    }
+
+    h *= 60;
+  }
+
+  return Math.round(h);
+}
+function syncHueAndOpacityFromRGBA() {
+  const r = Number(rSlider.value);
+  const g = Number(gSlider.value);
+  const b = Number(bSlider.value);
+  const a = Number(aSlider.value);
+
+  // convert RGB → Hue
+  const hue = rgbToHsl(r, g, b);
+
+  // set slider values
+  hueSlider.value = hue;
+  opacitySlider.value = a;
+
+  const hueColor = `hsl(${hue}, 100%, 50%)`;
+
+  // update visuals
+  hueSlider.style.setProperty("--thumb-color", hueColor);
+  opacitySlider.style.background =
+    `linear-gradient(to right, transparent, ${hueColor})`;
+}
+
 
 
 hueSlider.addEventListener("input", () => {
