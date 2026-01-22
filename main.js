@@ -125,6 +125,70 @@ function rgbToHsl(r, g, b) {
 
   return Math.round(h);
 }
+function hslToRgb(h, s = 100, l = 50) {
+  s /= 100;
+  l /= 100;
+
+  const c = (1 - Math.abs(2 * l - 1)) * s;
+  const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+  const m = l - c / 2;
+
+  let r = 0, g = 0, b = 0;
+
+  if (h < 60)      [r, g, b] = [c, x, 0];
+  else if (h < 120)[r, g, b] = [x, c, 0];
+  else if (h < 180)[r, g, b] = [0, c, x];
+  else if (h < 240)[r, g, b] = [0, x, c];
+  else if (h < 300)[r, g, b] = [x, 0, c];
+  else             [r, g, b] = [c, 0, x];
+
+  return {
+    r: Math.round((r + m) * 255),
+    g: Math.round((g + m) * 255),
+    b: Math.round((b + m) * 255)
+  };
+}
+
+function applyRGBA(r, g, b, a) {
+  // update sliders
+  rSlider.value = r;
+  gSlider.value = g;
+  bSlider.value = b;
+  aSlider.value = a;
+
+  rValue.value = r;
+  gValue.value = g;
+  bValue.value = b;
+  aValue.value = a;
+
+  heroText.textContent = `rgba(${r}, ${g}, ${b}, ${a})`;
+  leftChildOne.style.backgroundColor = heroText.textContent;
+
+  syncHueAndOpacityFromRGBA();
+}
+[rSlider, gSlider, bSlider, aSlider].forEach(slider => {
+  slider.addEventListener("input", () => {
+    applyRGBA(
+      rSlider.value,
+      gSlider.value,
+      bSlider.value,
+      aSlider.value
+    );
+  });
+});
+
+[rValue, gValue, bValue, aValue].forEach(input => {
+  input.addEventListener("input", () => {
+    applyRGBA(
+      rValue.value,
+      gValue.value,
+      bValue.value,
+      aValue.value
+    );
+  });
+});
+
+
 function syncHueAndOpacityFromRGBA() {
   const r = Number(rSlider.value);
   const g = Number(gSlider.value);
@@ -157,11 +221,23 @@ hueSlider.addEventListener("input", () => {
   );
   updateOpacityBackground();
 });
+hueSlider.addEventListener("input", () => {
+  const hue = Number(hueSlider.value);
+  const { r, g, b } = hslToRgb(hue);
 
+  applyRGBA(r, g, b, aSlider.value);
+});
 opacitySlider.addEventListener("input", () => {
   const alpha = opacitySlider.value;
 });
-
+opacitySlider.addEventListener("input", () => {
+  applyRGBA(
+    rSlider.value,
+    gSlider.value,
+    bSlider.value,
+    opacitySlider.value
+  );
+});
 
 updateRGBA();
 displayColor();
