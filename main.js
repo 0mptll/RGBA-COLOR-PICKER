@@ -87,6 +87,18 @@ function displayColor(){
     leftChildOne.style.backgroundColor = heroText.textContent;
 }
 
+function updateOpacityBackground() {
+  const hue = hueSlider.value;
+
+  const hueColor = `hsl(${hue}, 100%, 50%)`;
+
+  hueSlider.style.setProperty("--thumb-color", hueColor);
+
+  opacitySlider.style.background =
+    `linear-gradient(to right, transparent, ${hueColor})`;
+}
+
+
 hueSlider.addEventListener("input", () => {
   const hue = hueSlider.value;
 
@@ -94,13 +106,16 @@ hueSlider.addEventListener("input", () => {
     "--thumb-color",
     `hsl(${hue}, 100%, 50%)`
   );
+  updateOpacityBackground();
 });
 
 opacitySlider.addEventListener("input", () => {
   const alpha = opacitySlider.value;
-  console.log("Opacity:", alpha);
 });
 
 
 updateRGBA();
 displayColor();
+updateOpacityBackground();
+
+
