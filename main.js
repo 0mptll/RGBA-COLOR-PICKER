@@ -15,6 +15,9 @@ const copyBtn = document.querySelector(".copy-btn");
 
 const leftChildOne = document.querySelector(".left-child-1");
 
+const colorBox = document.getElementById("colorBox");
+const hueSlider = document.getElementById("hueSlider");
+const opacitySlider = document.getElementById("opacitySlider");
 
 
 copyBtn.addEventListener("click", () => {
@@ -83,6 +86,21 @@ function updateRGBA() {
 function displayColor(){
     leftChildOne.style.backgroundColor = heroText.textContent;
 }
+
+hueSlider.addEventListener("input", () => {
+  const hue = hueSlider.value;
+
+  hueSlider.style.setProperty(
+    "--thumb-color",
+    `hsl(${hue}, 100%, 50%)`
+  );
+});
+
+opacitySlider.addEventListener("input", () => {
+  const alpha = opacitySlider.value;
+  console.log("Opacity:", alpha);
+});
+
 
 updateRGBA();
 displayColor();

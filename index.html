@@ -125,9 +125,30 @@
         </div>
         <div class="child-2">
             <div class="child-2-parent">
-                <canvas class="child-2-color-picker-display" id="colorBox"></canvas>
-                <canvas class="child-2-color-picker-manual" id="hueSlider"></canvas>
-                <canvas class="child-2-opacity-picker-manual"></canvas>
+                <div class="child-2-color-picker-display" id="colorBox">
+                    <div class="color-cursor" id="colorCursor"></div>
+                </div>
+                <div class="child-2-color-picker-manual">
+                    <input 
+                        type="range" 
+                        min="0" 
+                        max="360" 
+                        value="0"
+                        id="hueSlider"
+                        class="hue-range"
+                    />
+                </div>
+                <div class="child-2-opacity-picker-manual">
+                    <input 
+                        type="range" 
+                        min="0" 
+                        max="1" 
+                        value="1"
+                        id="opacitySlider"
+                        class="opacity-range"
+                        step="0.01"
+                    />
+                </div>
             </div>
         </div>
     </div>
