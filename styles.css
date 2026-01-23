@@ -33,7 +33,9 @@
     text-align: center;
     align-content: center;
     gap:10px;
+    background-color: #F9FAFB;
 }
+
 
 .hero-style{
     font-family: 'Work Sans', sans-serif;
@@ -48,6 +50,7 @@
     height: 300px;
     width: 50%;
     margin: 10px;
+    background-color:#F9FAFB
 }
 
 .left-child-1{
@@ -59,7 +62,7 @@
 }
 .right-child-1{
     margin: 20px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius:0.25rem;
     height: 250px;
     width: 60%;
@@ -67,6 +70,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: space-between;
+    background-color: #F9FAFB;
 }
 
 
@@ -82,7 +86,7 @@
 .parent-a {
     display: flex;
     flex-direction: row;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 0.25rem;
     margin: 10px;
     height: 25%;
@@ -90,6 +94,7 @@
     justify-content: center;
     align-items: center;
     padding: 5px;
+    background-color:#F9FAFB
 }
 
 
@@ -128,9 +133,8 @@
 .child-a-picker {
     height: 80%;
     width: 60%;
-    border: 1px solid black;
+    border: inherit;
     margin: 2px;
-    border: 1px solid black;
     border-radius: 0.25rem;
 }
 
@@ -180,6 +184,7 @@
     margin: 10px;
     justify-content: center;
     justify-items: flex-start;
+    background-color: #F9FAFB;
 }
 
 .child-2-parent{
@@ -195,7 +200,7 @@
 .child-2-color-picker-display{
     position: relative;
     margin: 20px;
-    border: 1px solid black;
+    border: inherit;;
     height: 100%;
     width: 100%;
     cursor: pointer;
@@ -215,7 +220,8 @@
 
 .child-2-color-picker-manual{
     margin: 1px 0 0 20px;
-    border: 1px solid black;
+    border: inherit;
+    border-radius: 0.25rem;
     height: 10%;
     width: 100%;
     border-radius: 0.25rem;
@@ -223,7 +229,8 @@
 
 .child-2-opacity-picker-manual{
     margin: 10px 0 0 20px;
-    border: 1px solid black;
+    border: inherit;
+    border-radius: 0.25rem;
     height: 10%;
     width: 100%;
     border-radius: 0.25rem;
@@ -312,7 +319,7 @@
 .multi-color-picker-drawer{
     display: flex;
     flex-direction: row;
-    border: 1px solid black;
+    /* border: 1px solid black; */
     border-radius: 0.25rem;
     background-color: #F9FAFB;
     border-radius: 0.25rem;
@@ -384,5 +391,3 @@
   height: 100%;
   width: 100%;
 }
-
-
