@@ -139,6 +139,7 @@ function rgbToHsv(r, g, b) {
   };
 }
 function hsvToRgb(h, s = 100, v = 100) {
+  h = h % 360;
   s /= 100;
   v /= 100;
 
@@ -220,6 +221,11 @@ function syncHueAndOpacityFromRGBA() {
   currentValue = hsv.v;
   currentAlpha = a;
 
+  // Prevent jumping from 360 to 0 since they represent the same color
+  if (hsv.h === 0 && Number(hueSlider.value) === 360) {
+    currentHue = 360;
+  }
+
   hueSlider.value = currentHue;
   opacitySlider.value = currentAlpha;
 
@@ -247,6 +253,7 @@ hueSlider.addEventListener("input", () => {
 });
 hueSlider.addEventListener("input", () => {
   const hue = Number(hueSlider.value);
+  currentHue = hue;
   const { r, g, b } = hsvToRgb(hue, currentSaturation, currentValue);
 
   applyRGBA(r, g, b, aSlider.value);
