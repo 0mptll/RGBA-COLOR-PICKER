@@ -20,6 +20,59 @@ const hueSlider = document.getElementById("hueSlider");
 const opacitySlider = document.getElementById("opacitySlider");
 const colorCursor = document.getElementById("colorCursor");
 
+const colorFormatSelect = document.getElementById("colorFormatSelect");
+const multiColorValue = document.getElementById("multiColorValue");
+
+const copyBtnMulti = document.querySelector(".copy-btn-multi");
+
+// Helper to convert RGB to HEX
+function rgbToHex(r, g, b) {
+    const toHex = (n) => n.toString(16).padStart(2, '0');
+    return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
+}
+
+// Helper to convert RGB to HSV (Value/Brightness)
+function rgbToHsvString(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const v = Math.max(r, g, b), n = v - Math.min(r, g, b);
+    const h = n && (v === r ? (g - b) / n : v === g ? 2 + (b - r) / n : 4 + (r - g) / n);
+    const hue = Math.round(60 * (h < 0 ? h + 6 : h));
+    const sat = Math.round(v ? (n / v) * 100 : 0);
+    const val = Math.round(v * 100);
+    return `hsv(${hue}, ${sat}%, ${val}%)`;
+}
+
+function updateMultiColorDisplay() {
+    const r = parseInt(rSlider.value);
+    const g = parseInt(gSlider.value);
+    const b = parseInt(bSlider.value);
+    const a = parseFloat(aSlider.value);
+    const format = colorFormatSelect.value;
+
+    let displayValue = "";
+
+    switch (format) {
+        case "hex":
+            displayValue = rgbToHex(r, g, b);
+            break;
+        case "rgb":
+            displayValue = `rgb(${r}, ${g}, ${b})`;
+            break;
+        case "rgba":
+            displayValue = `rgba(${r}, ${g}, ${b}, ${a})`;
+            break;
+        case "hsla": // This maps to your HSV option in the HTML
+            displayValue = rgbToHsvString(r, g, b);
+            break;
+    }
+
+    multiColorValue.value = displayValue;
+}
+
+// Listen for dropdown changes
+colorFormatSelect.addEventListener("change", updateMultiColorDisplay);
+
+
 let currentHue = 0;
 let currentAlpha = 1;
 let currentSaturation = 100;
@@ -40,22 +93,26 @@ rSlider.addEventListener("input",()=>{
     rValue.value = rSlider.value;
     updateRGBA();
     displayColor();
+    updateMultiColorDisplay();
 });
 
 gSlider.addEventListener("input",()=>{
     gValue.value = gSlider.value;
     updateRGBA();
     displayColor();
+    updateMultiColorDisplay();
 });
 bSlider.addEventListener("input",()=>{
     bValue.value = bSlider.value;
     updateRGBA();
     displayColor();
+    updateMultiColorDisplay();
 });
 aSlider.addEventListener("input",()=>{
     aValue.value = aSlider.value;
     updateRGBA();
     displayColor();
+    updateMultiColorDisplay();
 });
 
 // number -> slider
@@ -63,21 +120,25 @@ rValue.addEventListener("input",()=>{
     rSlider.value = rValue.value;
     updateRGBA();
     displayColor();
+    updateMultiColorDisplay();
 });
 gValue.addEventListener("input",()=>{
     gSlider.value = gValue.value;
     updateRGBA();
     displayColor();
+    updateMultiColorDisplay();
 });
 bValue.addEventListener("input",()=>{
     bSlider.value = bValue.value;
     updateRGBA();
     displayColor();
+    updateMultiColorDisplay();
 });
 aValue.addEventListener("input",()=>{
     aSlider.value = aValue.value;
     updateRGBA();
     displayColor();
+    updateMultiColorDisplay();  
 });
 
 function updateRGBA() {
@@ -195,6 +256,7 @@ function applyRGBA(r, g, b, a) {
       aSlider.value
     );
   });
+  updateMultiColorDisplay();
 });
 
 [rValue, gValue, bValue, aValue].forEach(input => {
@@ -206,6 +268,7 @@ function applyRGBA(r, g, b, a) {
       aValue.value
     );
   });
+  updateMultiColorDisplay();
 });
 
 
@@ -254,6 +317,7 @@ hueSlider.addEventListener("input", () => {
     `hsl(${hue}, 100%, 50%)`
   );
   updateOpacityBackground();
+  updateMultiColorDisplay();
 });
 hueSlider.addEventListener("input", () => {
   const hue = Number(hueSlider.value);
@@ -261,9 +325,11 @@ hueSlider.addEventListener("input", () => {
   const { r, g, b } = hsvToRgb(hue, currentSaturation, currentValue);
 
   applyRGBA(r, g, b, aSlider.value);
+  updateMultiColorDisplay();
 });
 opacitySlider.addEventListener("input", () => {
   const alpha = opacitySlider.value;
+  updateMultiColorDisplay();
 });
 opacitySlider.addEventListener("input", () => {
   applyRGBA(
@@ -272,6 +338,7 @@ opacitySlider.addEventListener("input", () => {
     bSlider.value,
     opacitySlider.value
   );
+  updateMultiColorDisplay();
 });
 
 colorBox.addEventListener("mousedown", (e) => {
@@ -289,6 +356,8 @@ colorBox.addEventListener("mousedown", (e) => {
 
     const rgb = hsvToRgb(currentHue, currentSaturation, currentValue);
     applyRGBA(rgb.r, rgb.g, rgb.b, currentAlpha);
+
+    updateMultiColorDisplay();
   }
 
   pickColor(e);
@@ -298,8 +367,48 @@ colorBox.addEventListener("mousedown", (e) => {
   }, { once: true });
 });
 
+
+// // converter functions
+// function rgbToHex(r, g, b) {
+//     const toHex = (n) => n.toString(16).padStart(2, '0');
+//     return `#${toHex(r)}${toHex(g)}${toHex(b)}`.toUpperCase();
+// }
+
+// function rgbToHsl(r, g, b) {
+//     r /= 255; g /= 255; b /= 255;
+//     const max = Math.max(r, g, b), min = Math.min(r, g, b);
+//     let h, s, l = (max + min) / 2;
+
+//     if (max === min) {
+//         h = s = 0; // Achromatic (gray)
+//     } else {
+//         const d = max - min;
+//         s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+//         switch (max) {
+//             case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+//             case g: h = (b - r) / d + 2; break;
+//             case b: h = (r - g) / d + 4; break;
+//         }
+//         h /= 6;
+//     }
+//     return `hsl(${Math.round(h * 360)}, ${Math.round(s * 100)}%, ${Math.round(l * 100)}%)`;
+// }
+
+// function rgbToHsv(r, g, b) {
+//     r /= 255; g /= 255; b /= 255;
+//     const v = Math.max(r, g, b), n = v - Math.min(r, g, b);
+//     const h = n && (v === r ? (g - b) / n : v === g ? 2 + (b - r) / n : 4 + (r - g) / n);
+    
+//     const hue = Math.round(60 * (h < 0 ? h + 6 : h));
+//     const sat = Math.round(v ? (n / v) * 100 : 0);
+//     const val = Math.round(v * 100);
+    
+//     return `hsv(${hue}, ${sat}%, ${val}%)`;
+// }
+
 updateRGBA();
 displayColor();
 updateOpacityBackground();
+updateMultiColorDisplay();
 
 
