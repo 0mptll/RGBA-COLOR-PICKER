@@ -63,6 +63,10 @@
     border-radius:0.25rem;
     height: 250px;
     width: 60%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: space-between;
 }
 
 
@@ -164,7 +168,7 @@
 #bSlider { background: #4a4aff; }
 #aSlider { background: #999; }
 
-
+ 
 
 .child-2{
     display: flex;
