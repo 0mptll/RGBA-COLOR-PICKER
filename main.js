@@ -88,6 +88,15 @@ copyBtn.addEventListener("click", () => {
     });
 });
 
+copyBtnMulti.addEventListener("click", () => {
+    const textToCopy = multiColorValue.value;
+    navigator.clipboard.writeText(textToCopy).then(() => {
+        alert(`Copied to clipboard: ${textToCopy}`);
+    }).catch(err => {
+        console.error('Failed to copy text: ', err);
+    });
+});
+
 // slider -> number
 rSlider.addEventListener("input",()=>{
     rValue.value = rSlider.value;
