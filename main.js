@@ -138,6 +138,7 @@ function rgbToHsv(r, g, b) {
     v: Math.round(v * 100)
   };
 }
+
 function hsvToRgb(h, s = 100, v = 100) {
   h = h % 360;
   s /= 100;
@@ -216,7 +217,10 @@ function syncHueAndOpacityFromRGBA() {
 
   const hsv = rgbToHsv(r, g, b);
 
-  currentHue = hsv.h;
+  // Preserve current hue when saturation is low (grayscale colors)
+  if (hsv.s > 10) {
+    currentHue = hsv.h;
+  }
   currentSaturation = hsv.s;
   currentValue = hsv.v;
   currentAlpha = a;
