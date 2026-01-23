@@ -237,6 +237,7 @@
 }
 
 /* Thumb */
+
 .hue-range::-webkit-slider-thumb {
   appearance: none;
   width: 14px;
