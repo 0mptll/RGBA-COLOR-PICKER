@@ -104,8 +104,10 @@
 .child-g-value,
 .child-b-value,
 .child-a-value {
-    height: 80%;
-    width: 21%;
+    /* height: 80%;
+    width: 21%; */
+    height: 100%;
+    width: 30%;
     border: 1px solid black;
     margin: 2px;
     border: 1px solid black;
@@ -182,7 +184,7 @@
     justify-content: center;
     justify-items: center;
     height: 100%;
-    width: 40%;
+    width: 60%;
     padding: 5px;
 }
 
@@ -378,3 +380,5 @@
   height: 100%;
   width: 100%;
 }
+
+
